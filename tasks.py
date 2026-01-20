@@ -120,6 +120,7 @@ def clean_deps(c):
 def setup(c, release=False):
     """Fetch dependencies and build the project (for fresh checkouts)."""
     fetch_deps(c)
+    configure(c, release=release)
     build(c, release=release)
 
 
@@ -147,6 +148,7 @@ def clean(c):
 def rebuild(c, release=False):
     """Clean and rebuild the project."""
     clean(c)
+    configure(c, release=release)
     build(c, release=release)
 
 
