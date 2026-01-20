@@ -220,7 +220,7 @@ This demo is just one example of what you can build with the Switchboard SDK. Ex
 - [More Example Apps](https://github.com/switchboard-sdk)
 - [Switchboard Extensions](https://docs.switchboard.audio/extensions/)
 
-Ready to build your own voice-enabled application? [Sign up for free](https://console.switchboard.audio/) and start building today.
+Ready to build your own voice-enabled application? [Sign up for free](https://console.switchboard.audio/register) and start building today.
 
 ## License
 
