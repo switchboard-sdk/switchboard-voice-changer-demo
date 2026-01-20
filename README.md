@@ -54,7 +54,20 @@ sudo apt install build-essential cmake libasound2-dev
 sudo dnf install gcc-c++ cmake alsa-lib-devel
 ```
 
-## Setup
+## Quick Start
+
+```bash
+git clone git@github.com:switchboard-sdk/switchboard-voice-changer-demo.git
+cd switchboard-voice-changer-demo
+pip install invoke
+inv setup --release
+```
+
+This fetches all dependencies and builds the project automatically.
+
+## Manual Setup
+
+If you prefer to set up manually:
 
 ### 1. Clone the Repository
 
@@ -64,8 +77,6 @@ cd switchboard-voice-changer-demo
 ```
 
 ### 2. Download Dependencies
-
-Create the external directory and download the required libraries:
 
 ```bash
 mkdir -p external
@@ -96,13 +107,13 @@ unzip SwitchboardAudioEffects.zip -d switchboard-effects
 
 **Signalsmith Stretch (pitch shifting):**
 ```bash
-git clone https://github.com/Signalsmith-Audio/signalsmith-stretch.git
-git clone https://github.com/Signalsmith-Audio/signalsmith-linear.git
+git clone git@github.com:Signalsmith-Audio/signalsmith-stretch.git
+git clone git@github.com:Signalsmith-Audio/linear.git signalsmith-linear
 ```
 
 **Catch2 (for tests):**
 ```bash
-git clone --branch v3.4.0 --depth 1 https://github.com/catchorg/Catch2.git
+git clone --branch v3.4.0 --depth 1 git@github.com:catchorg/Catch2.git
 ```
 
 Return to the project root:
@@ -110,9 +121,7 @@ Return to the project root:
 cd ..
 ```
 
-## Building
-
-### Using CMake directly:
+### 3. Build
 
 ```bash
 mkdir -p build
@@ -120,7 +129,7 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j$(nproc)
 ```
 
-### Using invoke (Python task runner):
+## Building with Invoke
 
 ```bash
 pip install invoke

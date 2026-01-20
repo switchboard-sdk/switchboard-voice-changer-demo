@@ -2,6 +2,8 @@
 Invoke tasks for Voice Changer Demo project.
 
 Usage:
+    inv setup       - Fetch dependencies and build (fresh checkout)
+    inv fetch-deps  - Download all external dependencies
     inv build       - Build the project
     inv test        - Run all tests
     inv run         - Run the demo application
@@ -11,8 +13,114 @@ Usage:
 
 from invoke import task
 import os
+import platform
+import shutil
 
 BUILD_DIR = "build"
+EXTERNAL_DIR = "external"
+SDK_VERSION = "3.1.0"
+
+
+def get_arch():
+    """Detect system architecture."""
+    machine = platform.machine().lower()
+    if machine in ("x86_64", "amd64"):
+        return "x86_64"
+    elif machine in ("aarch64", "arm64"):
+        return "aarch64"
+    else:
+        raise RuntimeError(f"Unsupported architecture: {machine}")
+
+
+def get_sdk_url(arch):
+    """Get Switchboard SDK download URL for architecture."""
+    if arch == "x86_64":
+        return f"https://switchboard-sdk-public.s3.amazonaws.com/builds/release/{SDK_VERSION}/linux/SwitchboardSDK.zip"
+    else:
+        return f"https://switchboard-sdk-public.s3.amazonaws.com/builds/release/{SDK_VERSION}/linux-aarch64/SwitchboardSDK.zip"
+
+
+def get_effects_url(arch):
+    """Get Switchboard Audio Effects download URL for architecture."""
+    if arch == "x86_64":
+        return f"https://switchboard-sdk-public.s3.amazonaws.com/builds/release/{SDK_VERSION}/linux/SwitchboardAudioEffects.zip"
+    else:
+        return f"https://switchboard-sdk-public.s3.amazonaws.com/builds/release/{SDK_VERSION}/linux-aarch64/SwitchboardAudioEffects.zip"
+
+
+@task
+def fetch_deps(c):
+    """Download all external dependencies."""
+    arch = get_arch()
+    print(f"Detected architecture: {arch}")
+
+    os.makedirs(EXTERNAL_DIR, exist_ok=True)
+
+    # Switchboard SDK
+    sdk_dir = os.path.join(EXTERNAL_DIR, "switchboard-sdk")
+    if not os.path.exists(sdk_dir):
+        print("Downloading Switchboard SDK...")
+        sdk_url = get_sdk_url(arch)
+        c.run(f"wget -q --show-progress -O /tmp/SwitchboardSDK.zip '{sdk_url}'")
+        c.run(f"unzip -q /tmp/SwitchboardSDK.zip -d {sdk_dir}")
+        c.run("rm /tmp/SwitchboardSDK.zip")
+    else:
+        print("Switchboard SDK already exists, skipping...")
+
+    # Switchboard Audio Effects
+    effects_dir = os.path.join(EXTERNAL_DIR, "switchboard-effects")
+    if not os.path.exists(effects_dir):
+        print("Downloading Switchboard Audio Effects...")
+        effects_url = get_effects_url(arch)
+        c.run(f"wget -q --show-progress -O /tmp/SwitchboardAudioEffects.zip '{effects_url}'")
+        c.run(f"unzip -q /tmp/SwitchboardAudioEffects.zip -d {effects_dir}")
+        c.run("rm /tmp/SwitchboardAudioEffects.zip")
+    else:
+        print("Switchboard Audio Effects already exists, skipping...")
+
+    # Signalsmith Stretch
+    stretch_dir = os.path.join(EXTERNAL_DIR, "signalsmith-stretch")
+    if not os.path.exists(stretch_dir):
+        print("Cloning signalsmith-stretch...")
+        c.run(f"git clone --depth 1 git@github.com:Signalsmith-Audio/signalsmith-stretch.git {stretch_dir}")
+    else:
+        print("signalsmith-stretch already exists, skipping...")
+
+    # Signalsmith Linear
+    linear_dir = os.path.join(EXTERNAL_DIR, "signalsmith-linear")
+    if not os.path.exists(linear_dir):
+        print("Cloning signalsmith-linear...")
+        c.run(f"git clone --depth 1 git@github.com:Signalsmith-Audio/linear.git {linear_dir}")
+    else:
+        print("signalsmith-linear already exists, skipping...")
+
+    # Catch2
+    catch2_dir = os.path.join(EXTERNAL_DIR, "Catch2")
+    if not os.path.exists(catch2_dir):
+        print("Cloning Catch2...")
+        c.run(f"git clone --branch v3.4.0 --depth 1 git@github.com:catchorg/Catch2.git {catch2_dir}")
+    else:
+        print("Catch2 already exists, skipping...")
+
+    print("All dependencies fetched successfully!")
+
+
+@task
+def clean_deps(c):
+    """Remove all external dependencies."""
+    if os.path.exists(EXTERNAL_DIR):
+        print(f"Removing {EXTERNAL_DIR}/...")
+        shutil.rmtree(EXTERNAL_DIR)
+        print("Dependencies removed.")
+    else:
+        print("No dependencies to remove.")
+
+
+@task
+def setup(c, release=False):
+    """Fetch dependencies and build the project (for fresh checkouts)."""
+    fetch_deps(c)
+    build(c, release=release)
 
 
 @task
