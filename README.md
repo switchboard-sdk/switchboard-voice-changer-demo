@@ -1,6 +1,6 @@
 # Voice Changer Demo
 
-[![Voice Changer Demo](https://img.youtube.com/vi/VIDEO_ID_HERE/maxresdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID_HERE)
+[![Voice Changer Demo](https://img.youtube.com/vi/-SU7XTKH9i0/maxresdefault.jpg)](https://www.youtube.com/watch?v=-SU7XTKH9i0)
 
 Transform your voice in real-time with this demo application built on the [Switchboard SDK](https://switchboard.audio/). From deep villain to chipmunk to robot, explore 10 dramatically different voice presets that showcase the power of real-time audio processing.
 
