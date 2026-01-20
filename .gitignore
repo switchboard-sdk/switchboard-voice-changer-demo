@@ -1,0 +1,21 @@
+# Build artifacts
+build/
+*.o
+*.so
+*.a
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependencies (downloaded externally)
+external/
+
+# Test output files
+test-assets/output_*.wav
+
+# Python
+__pycache__/
+*.pyc
