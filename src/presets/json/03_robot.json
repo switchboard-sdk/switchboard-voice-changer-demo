@@ -1,0 +1,65 @@
+{
+    "name": "Robot",
+    "description": "Metallic robotic voice",
+    "graph": {
+        "nodes": [
+            {
+                "id": "pitchShift",
+                "type": "VoiceChanger.PitchShift",
+                "config": {
+                    "pitchShift": 0.0,
+                    "formantPreserve": 1.0,
+                    "outputGain": 1.4
+                }
+            },
+            {
+                "id": "ringMod",
+                "type": "VoiceChanger.RingMod",
+                "config": {
+                    "carrierFrequency": 180.0,
+                    "mix": 0.65,
+                    "threshold": 0.02
+                }
+            },
+            {
+                "id": "vibrato",
+                "type": "AudioEffects.Vibrato",
+                "config": {
+                    "isEnabled": false
+                }
+            },
+            {
+                "id": "chorus",
+                "type": "AudioEffects.Chorus",
+                "config": {
+                    "isEnabled": false
+                }
+            },
+            {
+                "id": "flanger",
+                "type": "AudioEffects.Flanger",
+                "config": {
+                    "isEnabled": true,
+                    "sweepWidth": 0.008,
+                    "frequency": 0.3
+                }
+            },
+            {
+                "id": "delay",
+                "type": "AudioEffects.Delay",
+                "config": {
+                    "isEnabled": false
+                }
+            }
+        ],
+        "connections": [
+            { "sourceNode": "inputNode", "destinationNode": "pitchShift" },
+            { "sourceNode": "pitchShift", "destinationNode": "ringMod" },
+            { "sourceNode": "ringMod", "destinationNode": "vibrato" },
+            { "sourceNode": "vibrato", "destinationNode": "chorus" },
+            { "sourceNode": "chorus", "destinationNode": "flanger" },
+            { "sourceNode": "flanger", "destinationNode": "delay" },
+            { "sourceNode": "delay", "destinationNode": "outputNode" }
+        ]
+    }
+}

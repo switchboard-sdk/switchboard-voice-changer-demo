@@ -1,0 +1,73 @@
+{
+    "name": "Ghost",
+    "description": "Ethereal haunting spectral voice",
+    "graph": {
+        "nodes": [
+            {
+                "id": "pitchShift",
+                "type": "VoiceChanger.PitchShift",
+                "config": {
+                    "pitchShift": 4.0,
+                    "formantPreserve": 0.4,
+                    "outputGain": 1.2
+                }
+            },
+            {
+                "id": "ringMod",
+                "type": "VoiceChanger.RingMod",
+                "config": {
+                    "carrierFrequency": 100.0,
+                    "mix": 0.0,
+                    "threshold": 0.02
+                }
+            },
+            {
+                "id": "vibrato",
+                "type": "AudioEffects.Vibrato",
+                "config": {
+                    "isEnabled": true,
+                    "sweepWidth": 0.004,
+                    "frequency": 3.0
+                }
+            },
+            {
+                "id": "chorus",
+                "type": "AudioEffects.Chorus",
+                "config": {
+                    "isEnabled": true,
+                    "sweepWidth": 0.03,
+                    "frequency": 1.2
+                }
+            },
+            {
+                "id": "flanger",
+                "type": "AudioEffects.Flanger",
+                "config": {
+                    "isEnabled": true,
+                    "sweepWidth": 0.015,
+                    "frequency": 0.2
+                }
+            },
+            {
+                "id": "delay",
+                "type": "AudioEffects.Delay",
+                "config": {
+                    "isEnabled": true,
+                    "delayMs": 200,
+                    "feedbackLevel": 0.6,
+                    "wetMix": 0.5,
+                    "dryMix": 0.75
+                }
+            }
+        ],
+        "connections": [
+            { "sourceNode": "inputNode", "destinationNode": "pitchShift" },
+            { "sourceNode": "pitchShift", "destinationNode": "ringMod" },
+            { "sourceNode": "ringMod", "destinationNode": "vibrato" },
+            { "sourceNode": "vibrato", "destinationNode": "chorus" },
+            { "sourceNode": "chorus", "destinationNode": "flanger" },
+            { "sourceNode": "flanger", "destinationNode": "delay" },
+            { "sourceNode": "delay", "destinationNode": "outputNode" }
+        ]
+    }
+}

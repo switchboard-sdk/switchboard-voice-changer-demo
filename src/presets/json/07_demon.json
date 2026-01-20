@@ -1,0 +1,71 @@
+{
+    "name": "Demon",
+    "description": "Hellish demonic voice from the depths",
+    "graph": {
+        "nodes": [
+            {
+                "id": "pitchShift",
+                "type": "VoiceChanger.PitchShift",
+                "config": {
+                    "pitchShift": -10.0,
+                    "formantPreserve": 0.75,
+                    "outputGain": 1.5
+                }
+            },
+            {
+                "id": "ringMod",
+                "type": "VoiceChanger.RingMod",
+                "config": {
+                    "carrierFrequency": 35.0,
+                    "mix": 0.35,
+                    "threshold": 0.02
+                }
+            },
+            {
+                "id": "vibrato",
+                "type": "AudioEffects.Vibrato",
+                "config": {
+                    "isEnabled": false
+                }
+            },
+            {
+                "id": "chorus",
+                "type": "AudioEffects.Chorus",
+                "config": {
+                    "isEnabled": true,
+                    "sweepWidth": 0.025,
+                    "frequency": 0.6
+                }
+            },
+            {
+                "id": "flanger",
+                "type": "AudioEffects.Flanger",
+                "config": {
+                    "isEnabled": true,
+                    "sweepWidth": 0.012,
+                    "frequency": 0.15
+                }
+            },
+            {
+                "id": "delay",
+                "type": "AudioEffects.Delay",
+                "config": {
+                    "isEnabled": true,
+                    "delayMs": 250,
+                    "feedbackLevel": 0.5,
+                    "wetMix": 0.4,
+                    "dryMix": 0.8
+                }
+            }
+        ],
+        "connections": [
+            { "sourceNode": "inputNode", "destinationNode": "pitchShift" },
+            { "sourceNode": "pitchShift", "destinationNode": "ringMod" },
+            { "sourceNode": "ringMod", "destinationNode": "vibrato" },
+            { "sourceNode": "vibrato", "destinationNode": "chorus" },
+            { "sourceNode": "chorus", "destinationNode": "flanger" },
+            { "sourceNode": "flanger", "destinationNode": "delay" },
+            { "sourceNode": "delay", "destinationNode": "outputNode" }
+        ]
+    }
+}

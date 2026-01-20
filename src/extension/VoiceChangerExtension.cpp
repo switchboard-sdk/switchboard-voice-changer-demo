@@ -3,7 +3,15 @@
 #include "nodes/PitchShiftNode.hpp"
 #include "nodes/RingModNode.hpp"
 
+#include <switchboard_core/ExtensionManager.hpp>
+
 namespace voicechanger {
+
+void VoiceChangerExtension::load() {
+    switchboard::ExtensionManager::getInstance().registerExtension(
+        std::make_shared<VoiceChangerExtension>()
+    );
+}
 
 // NodeFactory implementation
 VoiceChangerNodeFactory::VoiceChangerNodeFactory() {

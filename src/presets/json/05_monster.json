@@ -1,0 +1,65 @@
+{
+    "name": "Monster",
+    "description": "Deep growling beast voice",
+    "graph": {
+        "nodes": [
+            {
+                "id": "pitchShift",
+                "type": "VoiceChanger.PitchShift",
+                "config": {
+                    "pitchShift": -14.0,
+                    "formantPreserve": 0.85,
+                    "outputGain": 1.6
+                }
+            },
+            {
+                "id": "ringMod",
+                "type": "VoiceChanger.RingMod",
+                "config": {
+                    "carrierFrequency": 25.0,
+                    "mix": 0.4,
+                    "threshold": 0.02
+                }
+            },
+            {
+                "id": "vibrato",
+                "type": "AudioEffects.Vibrato",
+                "config": {
+                    "isEnabled": false
+                }
+            },
+            {
+                "id": "chorus",
+                "type": "AudioEffects.Chorus",
+                "config": {
+                    "isEnabled": true,
+                    "sweepWidth": 0.02,
+                    "frequency": 0.4
+                }
+            },
+            {
+                "id": "flanger",
+                "type": "AudioEffects.Flanger",
+                "config": {
+                    "isEnabled": false
+                }
+            },
+            {
+                "id": "delay",
+                "type": "AudioEffects.Delay",
+                "config": {
+                    "isEnabled": false
+                }
+            }
+        ],
+        "connections": [
+            { "sourceNode": "inputNode", "destinationNode": "pitchShift" },
+            { "sourceNode": "pitchShift", "destinationNode": "ringMod" },
+            { "sourceNode": "ringMod", "destinationNode": "vibrato" },
+            { "sourceNode": "vibrato", "destinationNode": "chorus" },
+            { "sourceNode": "chorus", "destinationNode": "flanger" },
+            { "sourceNode": "flanger", "destinationNode": "delay" },
+            { "sourceNode": "delay", "destinationNode": "outputNode" }
+        ]
+    }
+}

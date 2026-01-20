@@ -1,0 +1,69 @@
+{
+    "name": "Radio",
+    "description": "Classic warm radio announcer",
+    "graph": {
+        "nodes": [
+            {
+                "id": "pitchShift",
+                "type": "VoiceChanger.PitchShift",
+                "config": {
+                    "pitchShift": -2.0,
+                    "formantPreserve": 0.9,
+                    "outputGain": 1.15
+                }
+            },
+            {
+                "id": "ringMod",
+                "type": "VoiceChanger.RingMod",
+                "config": {
+                    "carrierFrequency": 100.0,
+                    "mix": 0.0,
+                    "threshold": 0.02
+                }
+            },
+            {
+                "id": "vibrato",
+                "type": "AudioEffects.Vibrato",
+                "config": {
+                    "isEnabled": false
+                }
+            },
+            {
+                "id": "chorus",
+                "type": "AudioEffects.Chorus",
+                "config": {
+                    "isEnabled": true,
+                    "sweepWidth": 0.008,
+                    "frequency": 0.25
+                }
+            },
+            {
+                "id": "flanger",
+                "type": "AudioEffects.Flanger",
+                "config": {
+                    "isEnabled": false
+                }
+            },
+            {
+                "id": "delay",
+                "type": "AudioEffects.Delay",
+                "config": {
+                    "isEnabled": true,
+                    "delayMs": 45,
+                    "feedbackLevel": 0.15,
+                    "wetMix": 0.2,
+                    "dryMix": 0.9
+                }
+            }
+        ],
+        "connections": [
+            { "sourceNode": "inputNode", "destinationNode": "pitchShift" },
+            { "sourceNode": "pitchShift", "destinationNode": "ringMod" },
+            { "sourceNode": "ringMod", "destinationNode": "vibrato" },
+            { "sourceNode": "vibrato", "destinationNode": "chorus" },
+            { "sourceNode": "chorus", "destinationNode": "flanger" },
+            { "sourceNode": "flanger", "destinationNode": "delay" },
+            { "sourceNode": "delay", "destinationNode": "outputNode" }
+        ]
+    }
+}

@@ -82,7 +82,7 @@ def fetch_deps(c):
     stretch_dir = os.path.join(EXTERNAL_DIR, "signalsmith-stretch")
     if not os.path.exists(stretch_dir):
         print("Cloning signalsmith-stretch...")
-        c.run(f"git clone --depth 1 git@github.com:Signalsmith-Audio/signalsmith-stretch.git {stretch_dir}")
+        c.run(f"git clone --depth 1 https://github.com/Signalsmith-Audio/signalsmith-stretch.git {stretch_dir}")
     else:
         print("signalsmith-stretch already exists, skipping...")
 
@@ -90,7 +90,7 @@ def fetch_deps(c):
     linear_dir = os.path.join(EXTERNAL_DIR, "signalsmith-linear")
     if not os.path.exists(linear_dir):
         print("Cloning signalsmith-linear...")
-        c.run(f"git clone --depth 1 git@github.com:Signalsmith-Audio/linear.git {linear_dir}")
+        c.run(f"git clone --depth 1 https://github.com/Signalsmith-Audio/linear.git {linear_dir}")
     else:
         print("signalsmith-linear already exists, skipping...")
 
@@ -98,7 +98,7 @@ def fetch_deps(c):
     catch2_dir = os.path.join(EXTERNAL_DIR, "Catch2")
     if not os.path.exists(catch2_dir):
         print("Cloning Catch2...")
-        c.run(f"git clone --branch v3.4.0 --depth 1 git@github.com:catchorg/Catch2.git {catch2_dir}")
+        c.run(f"git clone --branch v3.4.0 --depth 1 https://github.com/catchorg/Catch2.git {catch2_dir}")
     else:
         print("Catch2 already exists, skipping...")
 

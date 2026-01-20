@@ -14,6 +14,12 @@ namespace voicechanger {
  */
 class VoiceChangerExtension : public switchboard::Extension {
 public:
+    /**
+     * @brief Loads and registers the VoiceChanger extension with the SDK.
+     * @details Call this before Switchboard::initialize() to make VoiceChanger nodes available.
+     */
+    static void load();
+
     VoiceChangerExtension();
     ~VoiceChangerExtension() override = default;
 

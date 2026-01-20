@@ -107,13 +107,13 @@ unzip SwitchboardAudioEffects.zip -d switchboard-effects
 
 **Signalsmith Stretch (pitch shifting):**
 ```bash
-git clone git@github.com:Signalsmith-Audio/signalsmith-stretch.git
-git clone git@github.com:Signalsmith-Audio/linear.git signalsmith-linear
+git clone https://github.com/Signalsmith-Audio/signalsmith-stretch.git
+git clone https://github.com/Signalsmith-Audio/linear.git signalsmith-linear
 ```
 
 **Catch2 (for tests):**
 ```bash
-git clone --branch v3.4.0 --depth 1 git@github.com:catchorg/Catch2.git
+git clone --branch v3.4.0 --depth 1 https://github.com/catchorg/Catch2.git
 ```
 
 Return to the project root:
