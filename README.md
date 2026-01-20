@@ -16,7 +16,7 @@ This demo showcases just a fraction of what's possible:
 - **Modular node-based architecture** for flexible audio routing
 - **Cross-platform deployment** from a single codebase
 
-[Get started with Switchboard SDK](https://console.switchboard.audio/) and build your own voice-enabled applications.
+[Get started with Switchboard SDK](https://console.switchboard.audio/register) and build your own voice-enabled applications.
 
 ## Voice Presets
 
