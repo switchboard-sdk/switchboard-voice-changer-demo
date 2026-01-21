@@ -14,8 +14,6 @@
 #include "presets/VoicePresets.hpp"
 #include "extension/VoiceChangerNodeFactory.hpp"
 
-#include <switchboard_v2/AudioGraphFactory.hpp>
-#include <switchboard_v2/SwitchboardObjectFactory.hpp>
 #include <AudioEffectsExtension.hpp>
 
 #include <ChorusNode.hpp>
