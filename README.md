@@ -216,6 +216,10 @@ Microphone → PitchShift → RingMod → Vibrato → Chorus → Flanger → Del
 
 The Switchboard SDK handles all the low-level audio I/O, buffer management, and real-time threading, so you can focus on building great audio features.
 
+### Cross-Platform Portability
+
+While this demo application targets Linux, the VoiceChanger extension code (`src/extension/` and `src/nodes/`) is written in portable C++17 with no platform-specific dependencies. You can use this extension on any platform supported by the Switchboard SDK, including Windows, macOS, iOS, and Android. The Linux-specific code is isolated to `main.cpp` (terminal UI and signal handling).
+
 ## Learn More
 
 This demo is just one example of what you can build with the Switchboard SDK. Explore more possibilities:
