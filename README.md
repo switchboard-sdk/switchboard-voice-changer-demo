@@ -184,7 +184,11 @@ inv test --filter="[integration]"
 │   │   ├── PitchShiftNode.*     # Pitch shifting with formant preservation
 │   │   └── RingModNode.*        # Ring modulation for robotic effects
 │   └── presets/
-│       └── VoicePresets.hpp     # 10 built-in voice presets
+│       ├── json/                # JSON preset definitions
+│       │   ├── 01_deep_villain.json
+│       │   ├── 02_chipmunk.json
+│       │   └── ...              # 10 voice presets
+│       └── VoicePresets.hpp     # Preset definitions for tests
 ├── tests/                       # Catch2 test files
 ├── test-assets/                 # Audio files for integration tests
 ├── external/                    # Downloaded dependencies (gitignored)
