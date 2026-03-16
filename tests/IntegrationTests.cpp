@@ -396,7 +396,7 @@ TEST_CASE("Integration - Process Harvard sentences through all presets", "[integ
     REQUIRE(inputRMS > 0.01f);  // Verify input is not silent
 
     // Create effect nodes
-    std::map<std::string, std::any> emptyConfig;
+    SBAnyMap emptyConfig;
     PitchShiftNode pitchShiftNode(emptyConfig);
     RingModNode ringModNode(emptyConfig);
     switchboard::extensions::audioeffects::ChorusNode chorusNode(2);
@@ -479,7 +479,7 @@ TEST_CASE("Integration - Each preset produces distinct output", "[integration][d
     std::vector<float> inputStereo = monoToStereo(resampledMono);
 
     // Create effect nodes
-    std::map<std::string, std::any> emptyConfig;
+    SBAnyMap emptyConfig;
     PitchShiftNode pitchShiftNode(emptyConfig);
     RingModNode ringModNode(emptyConfig);
     switchboard::extensions::audioeffects::ChorusNode chorusNode(2);

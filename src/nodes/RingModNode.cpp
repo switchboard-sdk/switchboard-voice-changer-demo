@@ -9,16 +9,16 @@
 
 namespace voicechanger {
 
-RingModNode::RingModNode(const std::map<std::string, std::any>& config) {
+RingModNode::RingModNode(const switchboard::SBAnyMap& config) {
     // Initialize from config
-    if (auto it = config.find("carrierFrequency"); it != config.end()) {
-        carrierFrequency_.store(std::any_cast<float>(it->second));
+    if (config.hasKey("carrierFrequency")) {
+        carrierFrequency_.store(switchboard::SBAny::convert<float>(config.at("carrierFrequency")));
     }
-    if (auto it = config.find("mix"); it != config.end()) {
-        mix_.store(std::any_cast<float>(it->second));
+    if (config.hasKey("mix")) {
+        mix_.store(switchboard::SBAny::convert<float>(config.at("mix")));
     }
-    if (auto it = config.find("threshold"); it != config.end()) {
-        threshold_.store(std::any_cast<float>(it->second));
+    if (config.hasKey("threshold")) {
+        threshold_.store(switchboard::SBAny::convert<float>(config.at("threshold")));
     }
 }
 
@@ -60,7 +60,7 @@ bool RingModNode::process(switchboard::AudioBus& inBus, switchboard::AudioBus& o
 
     for (uint frame = 0; frame < numFrames; ++frame) {
         // Generate carrier sample (sine wave)
-        float carrier = static_cast<float>(std::sin(phase_));
+        auto carrier = static_cast<float>(std::sin(phase_));
 
         // Advance phase
         phase_ += phaseIncrement_;
@@ -93,22 +93,22 @@ bool RingModNode::process(switchboard::AudioBus& inBus, switchboard::AudioBus& o
     return true;
 }
 
-switchboard::Result<void> RingModNode::setValue(const std::string& key, const std::any& value) {
+switchboard::Result<void> RingModNode::setValue(const std::string& key, const switchboard::SBAny& value) {
     try {
         if (key == "carrierFrequency") {
-            float v = std::any_cast<float>(value);
+            auto v = std::any_cast<float>(value);
             v = std::clamp(v, 10.0f, 1000.0f);
             carrierFrequency_.store(v);
             return switchboard::makeSuccess();
         }
         if (key == "mix") {
-            float v = std::any_cast<float>(value);
+            auto v = std::any_cast<float>(value);
             v = std::clamp(v, 0.0f, 1.0f);
             mix_.store(v);
             return switchboard::makeSuccess();
         }
         if (key == "threshold") {
-            float v = std::any_cast<float>(value);
+            auto v = std::any_cast<float>(value);
             v = std::clamp(v, 0.0f, 1.0f);
             threshold_.store(v);
             return switchboard::makeSuccess();
@@ -119,17 +119,17 @@ switchboard::Result<void> RingModNode::setValue(const std::string& key, const st
     }
 }
 
-switchboard::Result<std::any> RingModNode::getValue(const std::string& key) {
+switchboard::Result<switchboard::SBAny> RingModNode::getValue(const std::string& key) {
     if (key == "carrierFrequency") {
-        return switchboard::makeSuccess(std::make_any<float>(carrierFrequency_.load()));
+        return switchboard::makeSuccess<switchboard::SBAny>(carrierFrequency_.load());
     }
     if (key == "mix") {
-        return switchboard::makeSuccess(std::make_any<float>(mix_.load()));
+        return switchboard::makeSuccess<switchboard::SBAny>(mix_.load());
     }
     if (key == "threshold") {
-        return switchboard::makeSuccess(std::make_any<float>(threshold_.load()));
+        return switchboard::makeSuccess<switchboard::SBAny>(threshold_.load());
     }
-    return switchboard::makeError<std::any>("Unknown parameter: " + key);
+    return switchboard::makeError<switchboard::SBAny>("Unknown parameter: " + key);
 }
 
 } // namespace voicechanger

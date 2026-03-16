@@ -127,7 +127,7 @@ stretch.setFormantFactor(formantFactor);
 
 **Node Architecture Pattern**
 All audio nodes inherit from `SingleBusAudioProcessorNode` with:
-- Constructor accepting `std::map<std::string, std::any>& config`
+- Constructor accepting `SBAnyMap& config`
 - `setBusFormat()`: called when audio format is established
 - `process(AudioBus& inBus, AudioBus& outBus)`: per-buffer processing
 - `setValue()/getValue()`: runtime parameter access

@@ -18,7 +18,7 @@ constexpr uint BUFFER_SIZE = 512;
 constexpr int WARMUP_BUFFERS = 20;  // STFT-based nodes need warmup
 
 TEST_CASE("PitchShiftNode - Silence in produces silence out", "[PitchShiftNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     PitchShiftNode node(config);
 
     // Set bus format
@@ -45,7 +45,7 @@ TEST_CASE("PitchShiftNode - Silence in produces silence out", "[PitchShiftNode][
 }
 
 TEST_CASE("PitchShiftNode - Stereo processing (both channels)", "[PitchShiftNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     PitchShiftNode node(config);
 
     switchboard::AudioBusFormat inputFormat(SAMPLE_RATE, NUM_CHANNELS, BUFFER_SIZE);
@@ -83,7 +83,7 @@ TEST_CASE("PitchShiftNode - Stereo processing (both channels)", "[PitchShiftNode
 }
 
 TEST_CASE("PitchShiftNode - setValue/getValue for pitchShift", "[PitchShiftNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     PitchShiftNode node(config);
 
     // Get default value
@@ -102,7 +102,7 @@ TEST_CASE("PitchShiftNode - setValue/getValue for pitchShift", "[PitchShiftNode]
 }
 
 TEST_CASE("PitchShiftNode - setValue/getValue for formantPreserve", "[PitchShiftNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     PitchShiftNode node(config);
 
     // Get default value (should be 1.0 for full preservation)
@@ -121,7 +121,7 @@ TEST_CASE("PitchShiftNode - setValue/getValue for formantPreserve", "[PitchShift
 }
 
 TEST_CASE("PitchShiftNode - setValue/getValue for mix", "[PitchShiftNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     PitchShiftNode node(config);
 
     // Get default value (should be 1.0 for full wet)
@@ -140,7 +140,7 @@ TEST_CASE("PitchShiftNode - setValue/getValue for mix", "[PitchShiftNode][baseli
 }
 
 TEST_CASE("PitchShiftNode - setValue/getValue for outputGain", "[PitchShiftNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     PitchShiftNode node(config);
 
     // Get default value (should be 1.0 for unity gain)
@@ -159,7 +159,7 @@ TEST_CASE("PitchShiftNode - setValue/getValue for outputGain", "[PitchShiftNode]
 }
 
 TEST_CASE("PitchShiftNode - Config-based initialization", "[PitchShiftNode]") {
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"pitchShift", -8.0f},
         {"formantPreserve", 0.8f},
         {"mix", 0.9f},
@@ -177,7 +177,7 @@ TEST_CASE("PitchShiftNode - Pitch shift actually changes frequency", "[PitchShif
     // Shift up by 12 semitones (octave) - frequency should double
     // Note: formantPreserve=1.0 means full preservation (natural sounding)
     // formantPreserve=0.0 would mute the signal in signalsmith-stretch
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"pitchShift", 12.0f},
         {"formantPreserve", 1.0f}  // Keep formants preserved
     };
@@ -298,7 +298,7 @@ static std::vector<float> processThroughPitchShifter(
 TEST_CASE("PitchShiftNode - Positive semitones shift frequency UP (chipmunk)", "[PitchShiftNode][direction]") {
     // +12 semitones should double the frequency (octave up)
     // This is the chipmunk preset setting
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"pitchShift", 12.0f},
         {"formantPreserve", 1.0f}
     };
@@ -343,7 +343,7 @@ TEST_CASE("PitchShiftNode - Low formantPreserve does not invert pitch direction"
     // A formantPreserve of 0.3 was being passed directly to setFormantFactor(0.3),
     // which shifts formants DOWN by over an octave, potentially masking/inverting
     // the pitch shift perception.
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"pitchShift", 12.0f},       // Octave up
         {"formantPreserve", 0.3f}    // Low value (chipmunk preset uses this)
     };
@@ -380,7 +380,7 @@ TEST_CASE("PitchShiftNode - Low formantPreserve does not invert pitch direction"
 TEST_CASE("PitchShiftNode - Negative semitones shift frequency DOWN (villain)", "[PitchShiftNode][direction]") {
     // -12 semitones should halve the frequency (octave down)
     // Similar to deep villain preset
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"pitchShift", -12.0f},
         {"formantPreserve", 1.0f}
     };
