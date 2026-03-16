@@ -18,7 +18,7 @@ import shutil
 
 BUILD_DIR = "build"
 EXTERNAL_DIR = "external"
-SDK_VERSION = "3.1.0"
+SDK_VERSION = "3.2.0"
 
 
 def get_arch():

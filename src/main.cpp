@@ -235,53 +235,53 @@ void applyPreset(const VoicePreset& preset) {
 
     // Apply PitchShift parameters
     if (auto v = extractFloat("pitchShift", "pitchShift"))
-        Switchboard::setValue("pitchShift", "pitchShift", std::make_any<float>(*v));
+        Switchboard::setValue("pitchShift", "pitchShift", *v);
     if (auto v = extractFloat("pitchShift", "formantPreserve"))
-        Switchboard::setValue("pitchShift", "formantPreserve", std::make_any<float>(*v));
+        Switchboard::setValue("pitchShift", "formantPreserve", *v);
     if (auto v = extractFloat("pitchShift", "outputGain"))
-        Switchboard::setValue("pitchShift", "outputGain", std::make_any<float>(*v));
+        Switchboard::setValue("pitchShift", "outputGain", *v);
 
     // Apply RingMod parameters
     if (auto v = extractFloat("ringMod", "carrierFrequency"))
-        Switchboard::setValue("ringMod", "carrierFrequency", std::make_any<float>(*v));
+        Switchboard::setValue("ringMod", "carrierFrequency", *v);
     if (auto v = extractFloat("ringMod", "mix"))
-        Switchboard::setValue("ringMod", "mix", std::make_any<float>(*v));
+        Switchboard::setValue("ringMod", "mix", *v);
 
     // Apply Vibrato parameters
     if (auto v = extractBool("vibrato", "isEnabled"))
-        Switchboard::setValue("vibrato", "isEnabled", std::make_any<bool>(*v));
+        Switchboard::setValue("vibrato", "isEnabled", *v);
     if (auto v = extractFloat("vibrato", "sweepWidth"))
-        Switchboard::setValue("vibrato", "sweepWidth", std::make_any<float>(*v));
+        Switchboard::setValue("vibrato", "sweepWidth", *v);
     if (auto v = extractFloat("vibrato", "frequency"))
-        Switchboard::setValue("vibrato", "frequency", std::make_any<float>(*v));
+        Switchboard::setValue("vibrato", "frequency", *v);
 
     // Apply Chorus parameters
     if (auto v = extractBool("chorus", "isEnabled"))
-        Switchboard::setValue("chorus", "isEnabled", std::make_any<bool>(*v));
+        Switchboard::setValue("chorus", "isEnabled", *v);
     if (auto v = extractFloat("chorus", "sweepWidth"))
-        Switchboard::setValue("chorus", "sweepWidth", std::make_any<float>(*v));
+        Switchboard::setValue("chorus", "sweepWidth", *v);
     if (auto v = extractFloat("chorus", "frequency"))
-        Switchboard::setValue("chorus", "frequency", std::make_any<float>(*v));
+        Switchboard::setValue("chorus", "frequency", *v);
 
     // Apply Flanger parameters
     if (auto v = extractBool("flanger", "isEnabled"))
-        Switchboard::setValue("flanger", "isEnabled", std::make_any<bool>(*v));
+        Switchboard::setValue("flanger", "isEnabled", *v);
     if (auto v = extractFloat("flanger", "sweepWidth"))
-        Switchboard::setValue("flanger", "sweepWidth", std::make_any<float>(*v));
+        Switchboard::setValue("flanger", "sweepWidth", *v);
     if (auto v = extractFloat("flanger", "frequency"))
-        Switchboard::setValue("flanger", "frequency", std::make_any<float>(*v));
+        Switchboard::setValue("flanger", "frequency", *v);
 
     // Apply Delay parameters
     if (auto v = extractBool("delay", "isEnabled"))
-        Switchboard::setValue("delay", "isEnabled", std::make_any<bool>(*v));
+        Switchboard::setValue("delay", "isEnabled", *v);
     if (auto v = extractInt("delay", "delayMs"))
-        Switchboard::setValue("delay", "delayMs", std::make_any<uint>(*v));
+        Switchboard::setValue("delay", "delayMs", *v);
     if (auto v = extractFloat("delay", "feedbackLevel"))
-        Switchboard::setValue("delay", "feedbackLevel", std::make_any<float>(*v));
+        Switchboard::setValue("delay", "feedbackLevel", *v);
     if (auto v = extractFloat("delay", "wetMix"))
-        Switchboard::setValue("delay", "wetMix", std::make_any<float>(*v));
+        Switchboard::setValue("delay", "wetMix", *v);
     if (auto v = extractFloat("delay", "dryMix"))
-        Switchboard::setValue("delay", "dryMix", std::make_any<float>(*v));
+        Switchboard::setValue("delay", "dryMix", *v);
 }
 
 /**
@@ -335,12 +335,12 @@ int main(int argc, char* argv[]) {
     voicechanger::VoiceChangerExtension::load();
 
     // Initialize Switchboard SDK
-    Config sdkConfig({
+    const SBAnyMap sdkConfig({
         {"appID", "voice-changer-demo"},
         {"appSecret", "demo"},
-        {"extensions", Config({
-            {"AudioEffects", Config()},
-            {"VoiceChanger", Config()}
+        {"extensions", SBAnyMap({
+            {"AudioEffects", SBAnyMap()},
+            {"VoiceChanger", SBAnyMap()}
         })}
     });
 

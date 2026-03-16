@@ -10,7 +10,7 @@ namespace voicechanger {
 
 class PitchShiftNode::Impl {
 public:
-    signalsmith::stretch::SignalsmithStretch<float> stretch;
+    signalsmith::stretch::SignalsmithStretch<> stretch;
     std::vector<float*> inputPtrs;
     std::vector<float*> outputPtrs;
     std::vector<std::vector<float>> inputBuffers;
@@ -24,21 +24,21 @@ public:
     float lastFormantPreserve = 1.0f;
 };
 
-PitchShiftNode::PitchShiftNode(const std::map<std::string, std::any>& config)
+PitchShiftNode::PitchShiftNode(const switchboard::SBAnyMap& config)
     : pImpl(std::make_unique<Impl>()) {
 
     // Initialize from config
-    if (auto it = config.find("pitchShift"); it != config.end()) {
-        pitchShift_.store(std::any_cast<float>(it->second));
+    if (config.hasKey("pitchShift")) {
+        pitchShift_.store(switchboard::SBAny::convert<float>(config.at("pitchShift")));
     }
-    if (auto it = config.find("formantPreserve"); it != config.end()) {
-        formantPreserve_.store(std::any_cast<float>(it->second));
+    if (config.hasKey("formantPreserve")) {
+        formantPreserve_.store(switchboard::SBAny::convert<float>(config.at("formantPreserve")));
     }
-    if (auto it = config.find("mix"); it != config.end()) {
-        mix_.store(std::any_cast<float>(it->second));
+    if (config.hasKey("mix")) {
+        mix_.store(switchboard::SBAny::convert<float>(config.at("mix")));
     }
-    if (auto it = config.find("outputGain"); it != config.end()) {
-        outputGain_.store(std::any_cast<float>(it->second));
+    if (config.hasKey("outputGain")) {
+        outputGain_.store(switchboard::SBAny::convert<float>(config.at("outputGain")));
     }
 }
 
@@ -175,28 +175,28 @@ bool PitchShiftNode::process(switchboard::AudioBus& inBus, switchboard::AudioBus
     return true;
 }
 
-switchboard::Result<void> PitchShiftNode::setValue(const std::string& key, const std::any& value) {
+switchboard::Result<void> PitchShiftNode::setValue(const std::string& key, const switchboard::SBAny& value) {
     try {
         if (key == "pitchShift") {
-            float v = std::any_cast<float>(value);
+            auto v = std::any_cast<float>(value);
             v = std::clamp(v, -24.0f, 24.0f);
             pitchShift_.store(v);
             return switchboard::makeSuccess();
         }
         if (key == "formantPreserve") {
-            float v = std::any_cast<float>(value);
+            auto v = std::any_cast<float>(value);
             v = std::clamp(v, 0.0f, 1.0f);
             formantPreserve_.store(v);
             return switchboard::makeSuccess();
         }
         if (key == "mix") {
-            float v = std::any_cast<float>(value);
+            auto v = std::any_cast<float>(value);
             v = std::clamp(v, 0.0f, 1.0f);
             mix_.store(v);
             return switchboard::makeSuccess();
         }
         if (key == "outputGain") {
-            float v = std::any_cast<float>(value);
+            auto v = std::any_cast<float>(value);
             v = std::clamp(v, 0.0f, 4.0f);
             outputGain_.store(v);
             return switchboard::makeSuccess();
@@ -207,20 +207,20 @@ switchboard::Result<void> PitchShiftNode::setValue(const std::string& key, const
     }
 }
 
-switchboard::Result<std::any> PitchShiftNode::getValue(const std::string& key) {
+switchboard::Result<switchboard::SBAny> PitchShiftNode::getValue(const std::string& key) {
     if (key == "pitchShift") {
-        return switchboard::makeSuccess(std::make_any<float>(pitchShift_.load()));
+        return switchboard::makeSuccess<switchboard::SBAny>(pitchShift_.load());
     }
     if (key == "formantPreserve") {
-        return switchboard::makeSuccess(std::make_any<float>(formantPreserve_.load()));
+        return switchboard::makeSuccess<switchboard::SBAny>(formantPreserve_.load());
     }
     if (key == "mix") {
-        return switchboard::makeSuccess(std::make_any<float>(mix_.load()));
+        return switchboard::makeSuccess<switchboard::SBAny>(mix_.load());
     }
     if (key == "outputGain") {
-        return switchboard::makeSuccess(std::make_any<float>(outputGain_.load()));
+        return switchboard::makeSuccess<switchboard::SBAny>(outputGain_.load());
     }
-    return switchboard::makeError<std::any>("Unknown parameter: " + key);
+    return switchboard::makeError<switchboard::SBAny>("Unknown parameter: " + key);
 }
 
 } // namespace voicechanger

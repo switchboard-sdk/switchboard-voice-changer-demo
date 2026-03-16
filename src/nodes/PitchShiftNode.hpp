@@ -35,7 +35,7 @@ public:
         };
     }
 
-    explicit PitchShiftNode(const std::map<std::string, std::any>& config);
+    explicit PitchShiftNode(const switchboard::SBAnyMap& config);
     ~PitchShiftNode() override;
 
     // SingleBusAudioProcessorNode interface
@@ -44,8 +44,8 @@ public:
     bool process(switchboard::AudioBus& inBus, switchboard::AudioBus& outBus) override;
 
     // Parameter access
-    switchboard::Result<void> setValue(const std::string& key, const std::any& value) override;
-    switchboard::Result<std::any> getValue(const std::string& key) override;
+    switchboard::Result<void> setValue(const std::string& key, const switchboard::SBAny& value) override;
+    switchboard::Result<switchboard::SBAny> getValue(const std::string& key) override;
 
 private:
     class Impl;

@@ -26,7 +26,7 @@ public:
     std::string getName() override;
     std::shared_ptr<switchboard::NodeFactory> getNodeFactory() override;
 
-    switchboard::Result<void> initialize(const std::map<std::string, std::any>& config) override;
+    switchboard::Result<void> initialize(const switchboard::SBAnyMap& config) override;
     switchboard::Result<void> deinitialize() override;
 
 private:

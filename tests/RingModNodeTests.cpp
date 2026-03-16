@@ -17,7 +17,7 @@ constexpr uint NUM_CHANNELS = 2;
 constexpr uint BUFFER_SIZE = 512;
 
 TEST_CASE("RingModNode - Silence in produces silence out", "[RingModNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     RingModNode node(config);
 
     switchboard::AudioBusFormat inputFormat(SAMPLE_RATE, NUM_CHANNELS, BUFFER_SIZE);
@@ -39,7 +39,7 @@ TEST_CASE("RingModNode - Silence in produces silence out", "[RingModNode][baseli
 }
 
 TEST_CASE("RingModNode - Stereo processing (both channels)", "[RingModNode][baseline]") {
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"carrierFrequency", 150.0f},
         {"mix", 1.0f}
     };
@@ -75,7 +75,7 @@ TEST_CASE("RingModNode - Stereo processing (both channels)", "[RingModNode][base
 }
 
 TEST_CASE("RingModNode - setValue/getValue for carrierFrequency", "[RingModNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     RingModNode node(config);
 
     // Get default value
@@ -94,7 +94,7 @@ TEST_CASE("RingModNode - setValue/getValue for carrierFrequency", "[RingModNode]
 }
 
 TEST_CASE("RingModNode - setValue/getValue for mix", "[RingModNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     RingModNode node(config);
 
     // Get default value
@@ -113,7 +113,7 @@ TEST_CASE("RingModNode - setValue/getValue for mix", "[RingModNode][baseline]") 
 }
 
 TEST_CASE("RingModNode - setValue/getValue for threshold", "[RingModNode][baseline]") {
-    std::map<std::string, std::any> config;
+    SBAnyMap config;
     RingModNode node(config);
 
     // Get default value
@@ -132,7 +132,7 @@ TEST_CASE("RingModNode - setValue/getValue for threshold", "[RingModNode][baseli
 }
 
 TEST_CASE("RingModNode - Config-based initialization", "[RingModNode]") {
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"carrierFrequency", 250.0f},
         {"mix", 0.7f},
         {"threshold", 0.03f}
@@ -145,7 +145,7 @@ TEST_CASE("RingModNode - Config-based initialization", "[RingModNode]") {
 }
 
 TEST_CASE("RingModNode - Threshold gates low-level signals", "[RingModNode]") {
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"carrierFrequency", 150.0f},
         {"mix", 1.0f},
         {"threshold", 0.1f}  // High threshold
@@ -175,7 +175,7 @@ TEST_CASE("RingModNode - Ring modulation produces sidebands", "[RingModNode]") {
     // - 440 - 100 = 340 Hz
     // The original 440 Hz should be suppressed
 
-    std::map<std::string, std::any> config = {
+    SBAnyMap config = {
         {"carrierFrequency", 100.0f},
         {"mix", 1.0f},
         {"threshold", 0.0f}
@@ -236,7 +236,7 @@ TEST_CASE("RingModNode - Mix parameter blends dry/wet", "[RingModNode]") {
     switchboard::AudioBusFormat outputFormat(SAMPLE_RATE, NUM_CHANNELS, BUFFER_SIZE);
 
     // Full wet
-    std::map<std::string, std::any> wetConfig = {
+    SBAnyMap wetConfig = {
         {"carrierFrequency", 150.0f},
         {"mix", 1.0f}
     };
@@ -244,7 +244,7 @@ TEST_CASE("RingModNode - Mix parameter blends dry/wet", "[RingModNode]") {
     REQUIRE(wetNode.setBusFormat(inputFormat, outputFormat));
 
     // Half wet
-    std::map<std::string, std::any> halfConfig = {
+    SBAnyMap halfConfig = {
         {"carrierFrequency", 150.0f},
         {"mix", 0.5f}
     };

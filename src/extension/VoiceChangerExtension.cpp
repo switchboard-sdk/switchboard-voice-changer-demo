@@ -18,7 +18,7 @@ VoiceChangerNodeFactory::VoiceChangerNodeFactory() {
     // Register PitchShiftNode
     registerNode(
         PitchShiftNode::getNodeTypeInfo(),
-        [](const std::map<std::string, std::any>& config) -> switchboard::Node* {
+        [](const switchboard::SBAnyMap& config) -> switchboard::Node* {
             return new PitchShiftNode(config);
         }
     );
@@ -26,7 +26,7 @@ VoiceChangerNodeFactory::VoiceChangerNodeFactory() {
     // Register RingModNode
     registerNode(
         RingModNode::getNodeTypeInfo(),
-        [](const std::map<std::string, std::any>& config) -> switchboard::Node* {
+        [](const switchboard::SBAnyMap& config) -> switchboard::Node* {
             return new RingModNode(config);
         }
     );
@@ -56,7 +56,7 @@ std::shared_ptr<switchboard::NodeFactory> VoiceChangerExtension::getNodeFactory(
     return nodeFactory_;
 }
 
-switchboard::Result<void> VoiceChangerExtension::initialize(const std::map<std::string, std::any>& config) {
+switchboard::Result<void> VoiceChangerExtension::initialize(const switchboard::SBAnyMap& config) {
     (void)config;
     return switchboard::makeSuccess();
 }
